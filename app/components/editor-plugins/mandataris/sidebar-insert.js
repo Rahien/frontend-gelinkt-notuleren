@@ -26,18 +26,8 @@ export default class MandatarisSidebarInsertComponent extends Component {
       })[0] ?? null
     );
   }
-  get insertRange() {
-    const besluit = this.decisionNodeLocation;
-    if (besluit) {
-      const { node, pos } = besluit;
-      const endOfDecision = pos + node.nodeSize - 2;
-      return { from: endOfDecision, to: endOfDecision };
-    }
-    return undefined;
-  }
-
   get isDisabled() {
-    return !this.insertRange;
+    return !this.decisionNodeLocation;
   }
 
   @action
@@ -48,13 +38,11 @@ export default class MandatarisSidebarInsertComponent extends Component {
   @action
   insertMandataris(mandataris) {
     this.modalEnabled = false;
-    if (this.insertRange) {
+    if (!this.isDisabled) {
       const { schema } = this.controller;
       this.controller.withTransaction(
         (tr) => {
-          return tr.replaceRangeWith(
-            this.insertRange.from,
-            this.insertRange.to,
+          return tr.replaceSelectionWith(
             schema.node('mandatarisNode', {
               resource: mandataris.uri,
               firstName: mandataris.firstName,
