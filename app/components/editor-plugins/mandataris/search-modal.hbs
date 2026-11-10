@@ -1,0 +1,93 @@
+<AuModal
+  @modalOpen={{true}}
+  @title={{t 'mandataris-plugin.insert-statement'}}
+  @size='large'
+  @padding='none'
+  @closeModal={{@closeModal}}
+  {{did-insert this.didInsert}}
+  as |modal|
+>
+  <modal.Body>
+    <AuMainContainer class='citaten--main-container' as |mc|>
+      <mc.content>
+        <AuBodyContainer @scroll={{true}} class="au-u-padding">
+            <AuInput
+              id='searchtermexpanded'
+              @type='text'
+              @width='block'
+              @icon='search'
+              @iconAlignment='right'
+              placeholder={{t 'mandataris-plugin.search'}}
+              value={{this.searchValue}}
+              {{on 'input' this.updateFilter}}
+            />
+            <AuHr @size='large' />
+            {{#if this.mandatarissen.length}}
+              <ul class='au-c-list-navigation'>
+                {{#each this.mandatarissen as |mandataris|}}
+                  <li class='au-c-list-navigation__item'>
+                    <AuButton
+                      @skin='link'
+                      class='au-c-list-navigation__link au-u-padding au-u-1-1
+                        {{if (eq this.selectedMandataris mandataris) "active"}}'
+                      {{on 'click' (fn this.selectMandataris mandataris)}}
+                    >
+                      {{mandataris.fullName}}
+                      ({{mandataris.label}})
+                      {{#if (this.isInserted mandataris)}}
+                        <AuPill @skin='border' @icon='info-circle'>{{t
+                            'mandataris-plugin.already-attached'
+                          }}</AuPill>
+                      {{/if}}
+                    </AuButton>
+                  </li>
+                {{/each}}
+              </ul>
+            {{else if this.searchValue}}
+              <AuAlert
+                @title={{t 'mandataris-plugin.no-statement-found'}}
+                @skin='warning'
+                @icon='cross'
+                @size='small'
+                @closable={{false}}
+              />
+            {{else}}
+              <AuAlert
+                @title={{t 'mandataris-plugin.search-prompt'}}
+                @skin='info'
+                @icon='search'
+                @size='small'
+                @closable={{false}}
+              />
+            {{/if}}
+            {{#if this.fetchMandatarissen.isRunning}}
+              <AuLoader @hideMessage={{true}}>
+                {{t 'mandataris-plugin.loading'}}
+              </AuLoader>
+            {{/if}}
+        </AuBodyContainer>
+
+        <div class='au-c-modal__footer'>
+          <AuToolbar as |Group|>
+            <Group>
+              <AuButton @skin='link' {{on 'click' @closeModal}}>{{t
+                  'mandataris-plugin.cancel'
+                }}</AuButton>
+            </Group>
+            <Group>
+              <AuButton
+                @disabled={{or
+                  (not this.selectedMandataris)
+                  (this.isInserted this.selectedMandataris)
+                }}
+                {{on 'click' (fn @insertStatement this.selectedMandataris)}}
+              >
+                {{t 'mandataris-plugin.insert-statement'}}
+              </AuButton>
+            </Group>
+          </AuToolbar>
+        </div>
+      </mc.content>
+    </AuMainContainer>
+  </modal.Body>
+</AuModal>

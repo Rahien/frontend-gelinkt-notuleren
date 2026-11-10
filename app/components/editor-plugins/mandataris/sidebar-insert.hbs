@@ -1,0 +1,18 @@
+<li class='au-c-list__item'>
+  <AuButton
+    @icon='add'
+    @iconAlignment='left'
+    @skin='link'
+    {{on 'click' this.toggleModal}}
+    @disabled={{this.isDisabled}}
+  >
+    {{t 'mandataris-plugin.insert-statement'}}
+  </AuButton>
+</li>
+{{#if this.modalEnabled}}
+  <EditorPlugins::Mandataris::SearchModal
+    @closeModal={{this.toggleModal}}
+    @insertStatement={{this.insertMandataris}}
+    @controller={{@controller}}
+  />
+{{/if}}

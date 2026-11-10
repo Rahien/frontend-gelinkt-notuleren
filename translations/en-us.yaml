@@ -710,6 +710,23 @@ regulatory-statements-plugin:
   load-more: Load more
   already-attached: Already attached
 
+mandataris-plugin:
+  type: Mandatary
+  the-type: the mandatary statement
+  regulatory-statement: Mandatary
+  insert-statement: Insert Mandatary
+  cancel: Cancel
+  search: Search
+  search-prompt: Type to search for a mandatary
+  last-modification: Last modified
+  loading: Loading
+  no-statement-selected: No mandatary selected
+  no-statement-found: No mandatary found
+  edit-statement: Edit
+  detach-statement: Detach
+  load-more: Load more
+  already-attached: Already attached
+
 required-field:
   required: Required
 

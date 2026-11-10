@@ -66,6 +66,7 @@ import RdfaEditorContainer from 'frontend-gelinkt-notuleren/components/rdfa-edit
 import ConfirmRouteLeave from 'frontend-gelinkt-notuleren/components/confirm-route-leave';
 import ArImporterSidebarWidget from '@lblod/say-ar-design-plugin/components/sidebar-widget';
 import RegulatoryStatementsSidebarInsert from 'frontend-gelinkt-notuleren/components/editor-plugins/regulatory-statements/sidebar-insert';
+import MandatarisSidebarInsert from 'frontend-gelinkt-notuleren/components/editor-plugins/mandataris/sidebar-insert';
 import type ZittingModel from 'frontend-gelinkt-notuleren/models/zitting';
 import DocumentInformationModal from 'frontend-gelinkt-notuleren/components/document-information-modal';
 import type { GetContextualActionGroups } from '@lblod/ember-rdfa-editor/plugins/contextual-actions';
@@ -574,6 +575,9 @@ export default class AgendapointsEditController extends Component<AgendapointEdi
                 @controller={{container.controller}}
               />
             {{/if}}
+            <MandatarisSidebarInsert
+                @controller={{container.controller}}
+              />
             <TemplateCommentInsert @controller={{container.controller}} />
             <LocationInsert
               @controller={{container.controller}}

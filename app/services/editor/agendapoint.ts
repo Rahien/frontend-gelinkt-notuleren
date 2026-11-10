@@ -165,6 +165,10 @@ import { getContextualActionGroups as locationActionsGroups } from '@lblod/ember
 import { emptyBlockPlaceholder } from '@lblod/ember-rdfa-editor/plugins/empty-block-placeholder';
 import { getPersonActionGroups } from '@lblod/ember-rdfa-editor-lblod-plugins/plugins/variable-plugin/contextual-actions/person';
 import { lmbModalsPlugin } from '@lblod/ember-rdfa-editor-lblod-plugins/plugins/lmb-plugin';
+import {
+  mandatarisNode,
+  mandatarisNodeView,
+} from '../../editor-plugins/mandataris-plugin';
 
 const removeBlankNodes: ModelMigrationGenerator = (attrs) => {
   if (
@@ -428,6 +432,7 @@ export default class AgendapointEditorService extends Service {
   get nodeViews() {
     return (controller: SayController) => {
       return {
+        mandatarisNode: mandatarisNodeView(controller),
         regulatoryStatementNode: regulatoryStatementNodeView(controller),
         link: linkView(this.config.link)(controller),
         image: imageView(controller),
@@ -477,6 +482,7 @@ export default class AgendapointEditorService extends Service {
         placeholder,
         ...tableNodes({ tableGroup: 'block', cellContent: 'block+' }),
         date: date(this.config.date),
+        mandatarisNode,
         regulatoryStatementNode,
         templateComment,
         text_variable,

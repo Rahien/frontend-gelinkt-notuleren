@@ -716,6 +716,23 @@ regulatory-statements-plugin:
   load-more: Meer laden
   already-attached: Reeds gekoppeld
 
+mandataris-plugin:
+  type: Mandataris
+  the-type: de mandataris
+  regulatory-statement: Mandataris
+  insert-statement: Mandataris Invoegen
+  cancel: Annuleer
+  search: Zoeken
+  search-prompt: Typ om een mandataris te zoeken
+  last-modification: Laatst aangepast
+  loading: Aan het laden
+  no-statement-selected: Geen mandataris geselecteerd
+  no-statement-found: Geen mandatarissen gevonden
+  edit-statement: Bewerk
+  detach-statement: Loskoppelen
+  load-more: Meer laden
+  already-attached: Reeds gekoppeld
+
 required-field:
   required: Verplicht
 
