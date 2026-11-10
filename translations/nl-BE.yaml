@@ -721,6 +721,9 @@ mandataris-plugin:
   the-type: de mandataris
   regulatory-statement: Mandataris
   insert-statement: Mandataris Invoegen
+  replace-statement: Mandataris Vervangen
+  replace: Vervangen
+  delete: Verwijderen
   cancel: Annuleer
   search: Zoeken
   search-prompt: Typ om een mandataris te zoeken

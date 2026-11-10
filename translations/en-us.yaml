@@ -715,6 +715,9 @@ mandataris-plugin:
   the-type: the mandatary statement
   regulatory-statement: Mandatary
   insert-statement: Insert Mandatary
+  replace-statement: Replace Mandatary
+  replace: Replace
+  delete: Delete
   cancel: Cancel
   search: Search
   search-prompt: Type to search for a mandatary

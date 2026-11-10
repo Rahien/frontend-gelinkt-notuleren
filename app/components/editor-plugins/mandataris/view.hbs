@@ -1,3 +1,13 @@
-<AuPill class='say-mandataris-variable'>
+<AuPill class='say-mandataris-variable' {{on 'click' this.openModal}}>
   {{this.displayName}}
 </AuPill>
+{{#if this.modalOpen}}
+  <EditorPlugins::Mandataris::SearchModal
+    @closeModal={{this.closeModal}}
+    @insertStatement={{this.replaceMandataris}}
+    @deleteStatement={{this.deleteMandataris}}
+    @title={{t 'mandataris-plugin.replace-statement'}}
+    @submitLabel={{t 'mandataris-plugin.replace'}}
+    @controller={{this.controller}}
+  />
+{{/if}}

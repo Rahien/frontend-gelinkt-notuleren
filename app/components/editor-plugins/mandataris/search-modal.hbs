@@ -1,6 +1,6 @@
 <AuModal
   @modalOpen={{true}}
-  @title={{t 'mandataris-plugin.insert-statement'}}
+  @title={{this.title}}
   @size='large'
   @padding='none'
   @closeModal={{@closeModal}}
@@ -74,6 +74,15 @@
         <div class='au-c-modal__footer'>
           <AuToolbar as |Group|>
             <Group>
+              {{#if @deleteStatement}}
+                <AuButton
+                  @skin='naked'
+                  @alert={{true}}
+                  {{on 'click' @deleteStatement}}
+                >
+                  {{t 'mandataris-plugin.delete'}}
+                </AuButton>
+              {{/if}}
               <AuButton @skin='link' {{on 'click' @closeModal}}>{{t
                   'mandataris-plugin.cancel'
                 }}</AuButton>
@@ -86,7 +95,7 @@
                 }}
                 {{on 'click' (fn @insertStatement this.selectedMandataris)}}
               >
-                {{t 'mandataris-plugin.insert-statement'}}
+                {{this.submitLabel}}
               </AuButton>
             </Group>
           </AuToolbar>

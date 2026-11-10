@@ -16,6 +16,7 @@ const SEARCH_LIMIT = 10;
 
 export default class MandatarisSearchModalComponent extends Component {
   @service currentSession;
+  @service intl;
 
   @tracked searchValue = '';
   @tracked _selectedMandataris;
@@ -60,7 +61,7 @@ export default class MandatarisSearchModalComponent extends Component {
         ?s mandaat:isBestuurlijkeAliasVan ?persoon.
         ?persoon foaf:familyName ?lname.
         ?persoon persoon:gebruikteVoornaam ?fname.
-        ?lname bif:contains ${sparqlEscapeString(`'${value}'`)} .
+        FILTER(CONTAINS(LCASE(?lname), ${sparqlEscapeString(value)}))
         ?s org:holds ?mandaat.
         ?mandaat org:role / skos:prefLabel ?label.
         ?s mandaat:start ?start .
@@ -110,6 +111,16 @@ export default class MandatarisSearchModalComponent extends Component {
 
   get selectedMandataris() {
     return this._selectedMandataris ?? this.mandatarissen?.[0];
+  }
+
+  get title() {
+    return this.args.title ?? this.intl.t('mandataris-plugin.insert-statement');
+  }
+
+  get submitLabel() {
+    return (
+      this.args.submitLabel ?? this.intl.t('mandataris-plugin.insert-statement')
+    );
   }
 
   isInserted = (mandataris) =>
