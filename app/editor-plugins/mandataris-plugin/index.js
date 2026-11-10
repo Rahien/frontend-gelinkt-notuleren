@@ -2,6 +2,7 @@ import {
   createEmberNodeSpec,
   createEmberNodeView,
 } from '@lblod/ember-rdfa-editor/utils/ember-node';
+import { PluginKey, ProsePlugin } from '@lblod/ember-rdfa-editor';
 import MandatarisViewComponent from 'frontend-gelinkt-notuleren/components/editor-plugins/mandataris/view';
 import { formatMandatarisPeriod } from 'frontend-gelinkt-notuleren/utils/mandataris-date-range';
 
@@ -84,3 +85,60 @@ export const mandatarisWidget = {
   desiredLocation: 'insertSidebar',
   componentName: 'editor-plugins/mandataris/sidebar-insert',
 };
+
+export const mandatarisModalPluginKey = new PluginKey(
+  'MANDATARIS_MODAL_PLUGIN',
+);
+
+export function openMandatarisModal(view) {
+  const tr = view.state.tr;
+  tr.setMeta(mandatarisModalPluginKey, { action: 'open_mandataris_modal' });
+  view.dispatch(tr);
+}
+
+export function closeMandatarisModal(view) {
+  const tr = view.state.tr;
+  tr.setMeta(mandatarisModalPluginKey, { action: 'close_mandataris_modal' });
+  view.dispatch(tr);
+}
+
+export function openMandatarisModalCommand() {
+  return function (state, dispatch) {
+    if (!dispatch) {
+      return false;
+    }
+    const tr = state.tr;
+    tr.setMeta(mandatarisModalPluginKey, { action: 'open_mandataris_modal' });
+    dispatch(tr);
+    return true;
+  };
+}
+
+export function mandatarisModalPlugin() {
+  return new ProsePlugin({
+    key: mandatarisModalPluginKey,
+    state: {
+      init() {
+        return { modalOpen: false };
+      },
+      apply(tr, pluginState) {
+        const meta = tr.getMeta(mandatarisModalPluginKey);
+        if (!meta || typeof meta !== 'object' || !('action' in meta)) {
+          return pluginState;
+        }
+
+        if (meta.action === 'open_mandataris_modal') {
+          return { modalOpen: true };
+        }
+        if (meta.action === 'close_mandataris_modal') {
+          return { modalOpen: false };
+        }
+        return pluginState;
+      },
+    },
+  });
+}
+
+export function getMandatarisModalPluginState(state) {
+  return mandatarisModalPluginKey.getState(state);
+}

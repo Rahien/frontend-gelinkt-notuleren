@@ -168,7 +168,9 @@ import { lmbModalsPlugin } from '@lblod/ember-rdfa-editor-lblod-plugins/plugins/
 import {
   mandatarisNode,
   mandatarisNodeView,
+  mandatarisModalPlugin,
 } from '../../editor-plugins/mandataris-plugin';
+import { getMandatarisActionGroups } from '../../editor-plugins/mandataris-plugin/contextual-actions';
 
 const removeBlankNodes: ModelMigrationGenerator = (attrs) => {
   if (
@@ -206,6 +208,7 @@ export default class AgendapointEditorService extends Service {
     locationActionsGroups(),
     getCodelistActionGroups(this.codelistEditOptions),
     getPersonActionGroups(this.config.lmb),
+    getMandatarisActionGroups(),
   ];
 
   get config() {
@@ -552,6 +555,7 @@ export default class AgendapointEditorService extends Service {
       locationModalsPlugin(),
       emptyBlockPlaceholder(),
       lmbModalsPlugin(),
+      mandatarisModalPlugin(),
     ];
 
     // The autofiller plugin messes with the headless editor by appending a transaction just

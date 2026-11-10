@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 import { findAncestors } from '@lblod/ember-rdfa-editor/utils/position-utils';
@@ -8,11 +7,22 @@ import {
   BESLUIT,
   RDF,
 } from '@lblod/ember-rdfa-editor-lblod-plugins/utils/constants';
-export default class MandatarisSidebarInsertComponent extends Component {
-  @tracked modalEnabled = false;
+import {
+  closeMandatarisModal,
+  getMandatarisModalPluginState,
+  openMandatarisModal,
+} from '../../../editor-plugins/mandataris-plugin';
 
+export default class MandatarisSidebarInsertComponent extends Component {
   get controller() {
     return this.args.controller;
+  }
+
+  get modalEnabled() {
+    return (
+      getMandatarisModalPluginState(this.controller.mainEditorState)
+        ?.modalOpen ?? false
+    );
   }
 
   get decisionNodeLocation() {
@@ -32,12 +42,16 @@ export default class MandatarisSidebarInsertComponent extends Component {
 
   @action
   toggleModal() {
-    this.modalEnabled = !this.modalEnabled;
+    if (this.modalEnabled) {
+      closeMandatarisModal(this.controller.mainEditorView);
+    } else {
+      openMandatarisModal(this.controller.mainEditorView);
+    }
   }
 
   @action
   insertMandataris(mandataris) {
-    this.modalEnabled = false;
+    closeMandatarisModal(this.controller.mainEditorView);
     if (!this.isDisabled) {
       const { schema } = this.controller;
       this.controller.withTransaction(
