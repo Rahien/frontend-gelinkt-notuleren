@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { formatMandatarisPeriod } from 'frontend-gelinkt-notuleren/utils/mandataris-date-range';
 
 export default class MandatarisViewComponent extends Component {
   get node() {
@@ -15,10 +16,15 @@ export default class MandatarisViewComponent extends Component {
     return this.node.attrs.label;
   }
 
+  get period() {
+    return formatMandatarisPeriod(this.node.attrs.start, this.node.attrs.end);
+  }
+
   get displayName() {
-    if (this.name && this.label) {
-      return `${this.name} (${this.label})`;
-    }
-    return this.name || this.label;
+    const name =
+      this.name && this.label
+        ? `${this.name} (${this.label})`
+        : this.name || this.label;
+    return [name, this.period].filter(Boolean).join(' - ');
   }
 }

@@ -3,6 +3,7 @@ import {
   createEmberNodeView,
 } from '@lblod/ember-rdfa-editor/utils/ember-node';
 import MandatarisViewComponent from 'frontend-gelinkt-notuleren/components/editor-plugins/mandataris/view';
+import { formatMandatarisPeriod } from 'frontend-gelinkt-notuleren/utils/mandataris-date-range';
 
 /**
  * @typedef {import('@lblod/ember-rdfa-editor/utils/ember-node').EmberNodeConfig} EmberNodeConfig
@@ -23,6 +24,8 @@ const emberNodeConfig = {
     firstName: { default: '' },
     lastName: { default: '' },
     label: { default: '' },
+    start: { default: '' },
+    end: { default: '' },
     publicReference: { default: true },
   },
   toDOM: (node) => {
@@ -33,6 +36,7 @@ const emberNodeConfig = {
       name && node.attrs.label
         ? `${name} (${node.attrs.label})`
         : name || node.attrs.label;
+    const period = formatMandatarisPeriod(node.attrs.start, node.attrs.end);
     return [
       'span',
       {
@@ -45,8 +49,10 @@ const emberNodeConfig = {
         'data-mv-first-name': node.attrs.firstName,
         'data-mv-last-name': node.attrs.lastName,
         'data-mv-label': node.attrs.label,
+        'data-mv-start': node.attrs.start,
+        'data-mv-end': node.attrs.end,
       },
-      displayName,
+      [displayName, period].filter(Boolean).join(' - '),
     ];
   },
   parseDOM: [
@@ -59,6 +65,8 @@ const emberNodeConfig = {
             firstName: element.dataset.mvFirstName,
             lastName: element.dataset.mvLastName,
             label: element.dataset.mvLabel,
+            start: element.dataset.mvStart,
+            end: element.dataset.mvEnd,
             publicReference: element.dataset.mvPublicReference !== 'false',
           };
         }

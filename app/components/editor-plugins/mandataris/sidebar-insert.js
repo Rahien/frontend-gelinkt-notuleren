@@ -60,6 +60,8 @@ export default class MandatarisSidebarInsertComponent extends Component {
               firstName: mandataris.firstName,
               lastName: mandataris.lastName,
               label: mandataris.label,
+              start: mandataris.start,
+              end: mandataris.end,
             }),
           );
         },

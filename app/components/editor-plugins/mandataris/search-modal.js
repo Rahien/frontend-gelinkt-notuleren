@@ -8,6 +8,7 @@ import {
   sparqlEscapeString,
   sparqlEscapeUri,
 } from '@lblod/ember-rdfa-editor-lblod-plugins/utils/sparql-helpers';
+import { formatMandatarisPeriod } from 'frontend-gelinkt-notuleren/utils/mandataris-date-range';
 
 const ENDPOINT = '/sparql';
 const SEARCH_DEBOUNCE_MS = 300;
@@ -83,6 +84,12 @@ export default class MandatarisSearchModalComponent extends Component {
           firstName,
           lastName,
           label: binding.label.value,
+          start: binding.start.value,
+          end: binding.end?.value ?? '',
+          period: formatMandatarisPeriod(
+            binding.start.value,
+            binding.end?.value,
+          ),
           fullName: [firstName, lastName].filter(Boolean).join(' '),
         };
       }),
